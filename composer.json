@@ -1,7 +1,7 @@
 {
-	"name": "uestla/recaptcha-control",
+	"name": "clear01/recaptcha-control",
 	"type": "library",
-	"description": "reCAPTCHA control for Nette Framework forms",
+	"description": "Turnstile fork reCAPTCHA control for Nette Framework forms",
 	"keywords": ["nette", "forms", "recaptcha"],
 	"homepage": "https://github.com/uestla/ReCaptchaControl",
 	"license": "MIT",

@@ -13,7 +13,7 @@ namespace ReCaptchaControl;
 use Nette\Utils;
 use ReCaptchaControl\Http\IRequestDataProvider;
 use ReCaptchaControl\Http\Requester\IRequester;
-
+use Tracy\Debugger;
 
 class Validator
 {
@@ -28,7 +28,7 @@ class Validator
 	private $secretKey;
 
 
-	const VERIFICATION_URL = 'https://www.google.com/recaptcha/api/siteverify';
+	const VERIFICATION_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 
 
 	/**
@@ -48,18 +48,17 @@ class Validator
 	public function validate()
 	{
 		$response = $this->requestDataProvider->getResponseValue();
-
+		
 		if (!$response) {
 			return false;
 		}
 
-		$result = $this->requester->post(self::VERIFICATION_URL . '?' . http_build_query([
+		$result = $this->requester->post(self::VERIFICATION_URL, [
 			'secret' => $this->secretKey,
 			'response' => $response,
 			'remoteip' => $this->requestDataProvider->getRemoteIP(),
-
-		], '', '&'));
-
+		]);
+		
 		if (!$result) {
 			return false;
 		}
