@@ -39,7 +39,7 @@ class Validator
 	public $onError = [];
 
 
-	private const VERIFICATION_URL = 'https://www.google.com/recaptcha/api/siteverify';
+	private const VERIFICATION_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 
 
 	public function __construct(IRequestDataProvider $requestDataProvider, IRequester $requester, string $secretKey)
@@ -59,14 +59,13 @@ class Validator
 		}
 
 		try {
-			$url = sprintf('%s?%s', self::VERIFICATION_URL, http_build_query([
+			$payload = [
 				'secret' => $this->secretKey,
 				'response' => $response,
 				'remoteip' => $this->requestDataProvider->getRemoteIP(),
+			];
 
-			], '', '&'));
-
-			$result = $this->requester->post($url);
+			$result = $this->requester->post(self::VERIFICATION_URL, $payload, true);
 
 			try {
 				$json = Json::decode($result);

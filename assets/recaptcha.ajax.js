@@ -39,10 +39,10 @@
 
 	// load official library with explicit rendering
 	$('<script />', {
-		src: 'https://www.google.com/recaptcha/api.js'
-			+ '?onload=' + callbackName
+		src: 'https://challenges.cloudflare.com/turnstile/v0/api.js'
+			+ '?compat=recaptcha'
+			+ '&onload=' + callbackName
 			+ '&render=explicit'
-			+ '&hl=' + ($('html').attr('lang') || 'en')
 
 	}).insertBefore('script:first');
 

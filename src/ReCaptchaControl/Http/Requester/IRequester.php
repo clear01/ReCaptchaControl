@@ -20,8 +20,9 @@ interface IRequester
 	 * Performs a HTTP POST request with given $values
 	 *
 	 * @param  array<string, mixed> $values
+	 * @param  bool $asJson When true, sends the payload as application/json; otherwise as form-encoded
 	 * @throws RequestException
 	 */
-	public function post(string $url, array $values = []): string;
+	public function post(string $url, array $values = [], bool $asJson = false): string;
 
 }

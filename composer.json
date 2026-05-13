@@ -1,15 +1,15 @@
 {
-	"name": "uestla/recaptcha-control",
+	"name": "clear01/recaptcha-control",
 	"type": "library",
-	"description": "reCAPTCHA control for Nette Framework forms",
+	"description": "Turnstile fork reCAPTCHA control for Nette Framework forms",
 	"keywords": ["nette", "forms", "recaptcha"],
-	"homepage": "https://github.com/uestla/ReCaptchaControl",
+	"homepage": "https://github.com/clear01/ReCaptchaControl",
 	"license": "MIT",
 	"support": {
-		"issues": "https://github.com/uestla/ReCaptchaControl/issues"
+		"issues": "https://github.com/clear01/ReCaptchaControl/issues"
 	},
 	"require": {
-		"php": ">=7.2",
+		"php": ">= 8.3",
 		"nette/di": "^3.0",
 		"nette/http": "^3.0",
 		"nette/forms": "^3.0",

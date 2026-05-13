@@ -12,9 +12,9 @@ final class ErrorRequester implements IRequester
 {
 
 	/** @param  array<string, mixed> $values */
-	public function post(string $url, array $values = []): string
+	public function post(string $url, array $values = [], bool $asJson = false): string
 	{
-		throw RequestException::create($url, 'Error occurred!');
+        throw RequestException::create($url, 'Error occurred!');
 	}
 
 }

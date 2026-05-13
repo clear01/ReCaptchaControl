@@ -33,18 +33,26 @@ class CurlRequester implements IRequester
 	}
 
 
-	/** @param  array<string, mixed> $values */
-	public function post(string $url, array $values = []): string
-	{
-		$ch = curl_init();
+ /** @param  array<string, mixed> $values */
+ public function post(string $url, array $values = [], bool $asJson = false): string
+ {
+     $ch = curl_init();
 
-		curl_setopt_array($ch, [
-			CURLOPT_URL => $url,
-			CURLOPT_POST => true,
-			CURLOPT_POSTFIELDS => $values,
-			CURLOPT_RETURNTRANSFER => true,
+     $headers = [];
+     $postFields = $values;
+     if ($asJson) {
+         $postFields = json_encode($values);
+         $headers[] = 'Content-Type: application/json';
+     }
 
-		] + $this->options);
+     curl_setopt_array($ch, [
+         CURLOPT_URL => $url,
+         CURLOPT_POST => true,
+         CURLOPT_POSTFIELDS => $postFields,
+         CURLOPT_RETURNTRANSFER => true,
+         CURLOPT_HTTPHEADER => $headers,
+
+     ] + $this->options);
 
 		$response = curl_exec($ch);
 		$errno = curl_errno($ch);

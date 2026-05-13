@@ -28,18 +28,23 @@ class GuzzleRequester implements IRequester
 	}
 
 
-	public function post(string $url, array $values = []): string
-	{
-		try {
-			$response = $this->client->request('POST', $url, [
-				'form_params' => $values,
-			]);
+ public function post(string $url, array $values = [], bool $asJson = false): string
+ {
+     try {
+         $options = [];
+         if ($asJson) {
+             $options['json'] = $values;
+         } else {
+             $options['form_params'] = $values;
+         }
 
-			return (string) $response->getBody();
+         $response = $this->client->request('POST', $url, $options);
 
-		} catch (\Exception $e) {}
+         return (string) $response->getBody();
 
-		throw RequestException::create($url, $e->getMessage());
-	}
+     } catch (\Exception $e) {}
+
+     throw RequestException::create($url, $e->getMessage());
+ }
 
 }

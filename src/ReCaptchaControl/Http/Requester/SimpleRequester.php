@@ -16,25 +16,33 @@ namespace ReCaptchaControl\Http\Requester;
 class SimpleRequester implements IRequester
 {
 
-	public function post(string $url, array $values = []): string
-	{
-		$context = stream_context_create([
-			'http' => [
-				[
-					'method' => 'POST',
-					'content' => http_build_query($values, '', '&'),
-				]
-			],
-		]);
+    public function post(string $url, array $values = [], bool $asJson = false): string
+    {
+        $headers = [];
+        if ($asJson) {
+            $content = json_encode($values);
+            $headers[] = 'Content-Type: application/json';
+        } else {
+            $content = http_build_query($values, '', '&');
+            $headers[] = 'Content-Type: application/x-www-form-urlencoded';
+        }
 
-		$response = file_get_contents($url, false, $context);
+        $context = stream_context_create([
+            'http' => [
+                'method' => 'POST',
+                'content' => $content,
+                'header' => implode("\r\n", $headers),
+            ],
+        ]);
 
-		if ($response === false) {
-			$error = error_get_last();
-			throw RequestException::create($url, $error === null ? '' : $error['message']);
-		}
+        $response = file_get_contents($url, false, $context);
 
-		return $response;
-	}
+        if ($response === false) {
+            $error = error_get_last();
+            throw RequestException::create($url, $error === null ? '' : $error['message']);
+        }
+
+        return $response;
+    }
 
 }

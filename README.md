@@ -23,7 +23,7 @@ Adds the reCAPTCHA control to Nette Framework forms.
 For easy installation use [Composer](https://getcomposer.org/):
 
 ```
-composer require uestla/recaptcha-control
+composer require clear01/recaptcha-control
 ```
 
 Also don't forget to include the official JavaScript library:
